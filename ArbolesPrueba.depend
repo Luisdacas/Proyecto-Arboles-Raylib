@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1752638878 source:c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\main.cpp
+	"raylib.h"
+	"Arbol.hpp"
+	"Boton.hpp"
+	"InputBox.hpp"
+
+1752637570 source:c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\arbol.cpp
+	"Arbol.hpp"
+
+1752637571 c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\arbol.hpp
+	"raylib.h"
+	<string>
+	"Utilidades.hpp"
+	<cmath>
+	<thread>
+	<chrono>
+
+1752513124 source:c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\boton.cpp
+	"Boton.hpp"
+
+1752513112 c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\boton.hpp
+	"raylib.h"
+	<string>
+
+1752513150 source:c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\inputbox.cpp
+	"InputBox.hpp"
+
+1752513136 c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\inputbox.hpp
+	"raylib.h"
+	<string>
+
+1752544085 c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\utilidades.hpp
+	<string>
+	<list>
+	<sstream>
+
+1752540258 c:\users\usuario\documents\espe\2,3 semestre\estructura de datos\2 parcial\proyecto\arbolesprueba\listanodos.hpp
+
