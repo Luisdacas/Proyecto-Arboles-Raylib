@@ -7,6 +7,7 @@
 #include <cmath>
 #include <thread>
 #include <chrono>
+#include <unordered_map>
 
 struct Nodo {
     int dato;
@@ -51,6 +52,12 @@ private:
     Nodo* buscarMinimo(Nodo* nodo);
     Nodo* buscarMaximo(Nodo* nodo);
     void reiniciarColoresRec(Nodo* nodo);
+    Nodo* clonarArbol(Nodo* nodo);
+    Nodo* insertarBST(Nodo* nodo, int valor);
+    void destruirArbol(Nodo* nodo);
+    void capturarPosiciones(Nodo* nodo, std::unordered_map<int, Vector2>& mapa);
+    void interpolarPosiciones(Nodo* nodo, float t, const std::unordered_map<int, Vector2>& inicio, const std::unordered_map<int, Vector2>& fin);
+    void animarBalanceo(const std::unordered_map<int, Vector2>& inicio, const std::unordered_map<int, Vector2>& fin, float duracion);
 
 public:
     Arbol();

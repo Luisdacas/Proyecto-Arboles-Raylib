@@ -124,9 +124,22 @@ Nodo* Arbol::eliminarAVL(Nodo* nodo, int valor, bool usarMenor) {
 }
 
 void Arbol::insertarAnimado(int valor) {
+    // Simular inserción sin balanceo para obtener posiciones iniciales
+    Nodo* copia = clonarArbol(raiz);
+    copia = insertarBST(copia, valor);
+    actualizarPosiciones(copia, 850, 60, 200);
+    std::unordered_map<int, Vector2> inicio;
+    capturarPosiciones(copia, inicio);
+    destruirArbol(copia);
+
+    // Inserción real balanceada
     raiz = insertarAVL(raiz, valor);
     actualizarPosiciones(raiz, 850, 60, 200);
-    dormir(1000);  // 4 segundos
+    std::unordered_map<int, Vector2> fin;
+    capturarPosiciones(raiz, fin);
+
+    animarBalanceo(inicio, fin, 3.0f);
+    dormir(1000);
 }
 
 void Arbol::eliminarMayorDeMenores(int valor) {
@@ -317,4 +330,61 @@ bool Arbol::existe(int valor) const {
         nodo = valor < nodo->dato ? nodo->izq : nodo->der;
     }
     return false;
+}
+
+Nodo* Arbol::clonarArbol(Nodo* nodo) {
+    if (!nodo) return nullptr;
+    Nodo* nuevo = new Nodo(nodo->dato);
+    nuevo->altura = nodo->altura;
+    nuevo->izq = clonarArbol(nodo->izq);
+    nuevo->der = clonarArbol(nodo->der);
+    return nuevo;
+}
+
+void Arbol::destruirArbol(Nodo* nodo) {
+    if (!nodo) return;
+    destruirArbol(nodo->izq);
+    destruirArbol(nodo->der);
+    delete nodo;
+}
+
+Nodo* Arbol::insertarBST(Nodo* nodo, int valor) {
+    if (!nodo) return new Nodo(valor);
+    if (valor < nodo->dato)
+        nodo->izq = insertarBST(nodo->izq, valor);
+    else if (valor > nodo->dato)
+        nodo->der = insertarBST(nodo->der, valor);
+    return nodo;
+}
+
+void Arbol::capturarPosiciones(Nodo* nodo, std::unordered_map<int, Vector2>& mapa) {
+    if (!nodo) return;
+    mapa[nodo->dato] = { nodo->x, nodo->y };
+    capturarPosiciones(nodo->izq, mapa);
+    capturarPosiciones(nodo->der, mapa);
+}
+
+void Arbol::interpolarPosiciones(Nodo* nodo, float t, const std::unordered_map<int, Vector2>& inicio, const std::unordered_map<int, Vector2>& fin) {
+    if (!nodo) return;
+    auto itIni = inicio.find(nodo->dato);
+    auto itFin = fin.find(nodo->dato);
+    if (itIni != inicio.end() && itFin != fin.end()) {
+        nodo->x = itIni->second.x + (itFin->second.x - itIni->second.x) * t;
+        nodo->y = itIni->second.y + (itFin->second.y - itIni->second.y) * t;
+    }
+    interpolarPosiciones(nodo->izq, t, inicio, fin);
+    interpolarPosiciones(nodo->der, t, inicio, fin);
+}
+
+void Arbol::animarBalanceo(const std::unordered_map<int, Vector2>& inicio, const std::unordered_map<int, Vector2>& fin, float duracion) {
+    const int fps = 60;
+    int pasos = duracion * fps;
+    for (int i = 0; i <= pasos; ++i) {
+        float t = (float)i / pasos;
+        interpolarPosiciones(raiz, t, inicio, fin);
+        dibujar();
+        EndDrawing();
+        dormir(1000 / fps);
+    }
+    interpolarPosiciones(raiz, 1.0f, inicio, fin);
 }
